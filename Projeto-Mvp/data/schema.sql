@@ -1,0 +1,4 @@
+-- Esquema inicial do banco de dados.
+-- Nenhuma tabela foi criada porque o ZIP original não define entidades,
+-- atributos ou relacionamentos do domínio da aplicação.
+-- Adicione aqui os comandos CREATE TABLE após definir os requisitos.
