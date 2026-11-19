@@ -7,6 +7,7 @@
 
 - **Integrante 1:** Davi Francisco Gomes Vieira
 - **Integrante 2:** Davi Gama Cardoso
+- **Integrante 2:** José Humberto Dos Santos Junior
 - **Integrante 3:** Jadson Naatã Serra dos Santos
 - **Integrante 4:** João Felipe Lima Santos de Souza
 - **Integrante 5:** Pablo Sérgio Nascimento dos Santos
