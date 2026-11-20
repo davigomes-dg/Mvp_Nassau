@@ -7,6 +7,7 @@ from werkzeug.exceptions import HTTPException
 
 from api.routes.auth import auth_bp
 from api.routes.health import health_bp
+from api.routes.profile import profile_bp
 from backend.database import initialize_database
 from backend.errors import ApiError
 
@@ -31,6 +32,7 @@ def create_app():
     initialize_database()
     app.register_blueprint(health_bp, url_prefix="/api")
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
+    app.register_blueprint(profile_bp, url_prefix="/api")
 
     @app.errorhandler(ApiError)
     def api_error(error):

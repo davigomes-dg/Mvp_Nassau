@@ -73,7 +73,7 @@ def register(payload):
                 "SELECT id, full_name, email FROM users WHERE id = ?", (user_id,)
             ).fetchone()
     except Exception as error:
-        # A UNIQUE constraint can be reached concurrently after the pre-validation.
+        
         if "UNIQUE constraint failed: users.email" in str(error):
             raise ApiError(409, "Este e-mail já está cadastrado.") from error
         raise

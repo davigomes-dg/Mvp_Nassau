@@ -3,10 +3,106 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projeto Mvp</title>
+    <title>Notaê | Perfil do estudante</title>
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
+    <header class="site-header">
+      <a class="brand" href="./index.html" aria-label="Notaê, início">Notaê</a>
+      <span class="header-caption">Seu caminho para o ensino superior</span>
+    </header>
+
+    <main class="page-shell">
+      <section id="auth-panel" class="card auth-card" aria-labelledby="auth-title">
+        <p class="eyebrow">Perfil do estudante</p>
+        <h1 id="auth-title">Acesse sua conta</h1>
+        <p class="intro">Entre ou crie uma conta para salvar suas notas do ENEM e sua localização.</p>
+
+        <div class="auth-switch" role="tablist" aria-label="Acesso à conta">
+          <button class="switch-button is-active" type="button" data-auth-view="login" role="tab" aria-selected="true">Entrar</button>
+          <button class="switch-button" type="button" data-auth-view="register" role="tab" aria-selected="false">Criar conta</button>
+        </div>
+
+        <form id="login-form" class="form-stack">
+          <label for="login-email">E-mail</label>
+          <input id="login-email" name="email" type="email" autocomplete="email" required />
+          <label for="login-password">Senha</label>
+          <input id="login-password" name="password" type="password" autocomplete="current-password" required />
+          <button class="primary-button" type="submit">Entrar</button>
+        </form>
+
+        <form id="register-form" class="form-stack" hidden>
+          <label for="register-name">Nome</label>
+          <input id="register-name" name="name" type="text" maxlength="120" autocomplete="name" required />
+          <label for="register-email">E-mail</label>
+          <input id="register-email" name="email" type="email" autocomplete="email" required />
+          <label for="register-password">Senha</label>
+          <input id="register-password" name="password" type="password" minlength="8" maxlength="128" autocomplete="new-password" required />
+          <button class="primary-button" type="submit">Criar conta</button>
+        </form>
+        <p id="auth-feedback" class="feedback" role="status" aria-live="polite"></p>
+      </section>
+
+      <section id="profile-panel" class="card profile-card" aria-labelledby="profile-title" hidden>
+        <div class="profile-heading">
+          <div>
+            <p class="eyebrow">Seu espaço</p>
+            <h1 id="profile-title">Perfil do estudante</h1>
+            <p id="welcome-message" class="intro"></p>
+          </div>
+          <button id="logout-button" class="secondary-button" type="button">Sair</button>
+        </div>
+
+        <p class="section-copy">Informe ou atualize suas notas e onde você mora.</p>
+        <form id="profile-form" class="form-stack">
+          <fieldset>
+            <legend>Notas do ENEM</legend>
+            <p class="field-hint">Preencha as notas disponíveis, de 0 a 1000. Os campos podem ficar em branco.</p>
+            <div class="score-grid">
+              <div class="field-group">
+                <label for="score-linguagens">Linguagens e códigos</label>
+                <input id="score-linguagens" name="linguagens" type="number" min="0" max="1000" step="0.1" inputmode="decimal" />
+              </div>
+              <div class="field-group">
+                <label for="score-humanas">Ciências humanas</label>
+                <input id="score-humanas" name="ciencias_humanas" type="number" min="0" max="1000" step="0.1" inputmode="decimal" />
+              </div>
+              <div class="field-group">
+                <label for="score-natureza">Ciências da natureza</label>
+                <input id="score-natureza" name="ciencias_natureza" type="number" min="0" max="1000" step="0.1" inputmode="decimal" />
+              </div>
+              <div class="field-group">
+                <label for="score-matematica">Matemática</label>
+                <input id="score-matematica" name="matematica" type="number" min="0" max="1000" step="0.1" inputmode="decimal" />
+              </div>
+              <div class="field-group">
+                <label for="score-redacao">Redação</label>
+                <input id="score-redacao" name="redacao" type="number" min="0" max="1000" step="0.1" inputmode="decimal" />
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Localização</legend>
+            <div class="location-grid">
+              <div class="field-group">
+                <label for="location-city">Cidade</label>
+                <input id="location-city" name="cidade" type="text" maxlength="120" autocomplete="address-level2" />
+              </div>
+              <div class="field-group state-field">
+                <label for="location-state">Estado (UF)</label>
+                <input id="location-state" name="estado" type="text" maxlength="2" autocomplete="address-level1" placeholder="CE" />
+              </div>
+            </div>
+          </fieldset>
+
+          <button class="primary-button save-button" type="submit">Salvar perfil</button>
+        </form>
+        <p id="profile-feedback" class="feedback" role="status" aria-live="polite"></p>
+        <p class="disclaimer">As possibilidades de ingresso são estimativas. Notas de corte e critérios podem mudar a cada processo seletivo.</p>
+      </section>
+    </main>
+
     <script type="module" src="./assets/js/script.js"></script>
   </body>
 </html>

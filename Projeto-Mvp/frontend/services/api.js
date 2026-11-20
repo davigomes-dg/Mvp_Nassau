@@ -19,8 +19,10 @@ export async function apiRequest(endpoint, options = {}) {
     : null;
 
   if (!response.ok) {
-    const message = payload?.error || `Erro HTTP ${response.status}`;
-    throw new Error(message);
+    const error = new Error(payload?.error || `Erro HTTP ${response.status}`);
+    error.status = response.status;
+    error.details = payload?.details || null;
+    throw error;
   }
 
   return payload;
