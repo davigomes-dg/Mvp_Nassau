@@ -1,268 +1,581 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Acadêmico — NOTAÊ</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+:root {
+    color-scheme: light;
+    --ink: #17324a;
+    --muted: #617487;
+    --paper: #f4f7f8;
+    --surface: #ffffff;
+    --line: #dce5e9;
+    --teal: #087f83;
+    --teal-dark: #06666a;
+    --teal-soft: #e6f5f3;
+    --gold: #f0b65b;
+    --danger: #a73535;
+    --danger-soft: #fff0ef;
+    --success: #176a4b;
+    --success-soft: #e9f6ef;
+    --shadow: 0 18px 50px rgba(22, 48, 68, 0.08);
+}
 
-    <!-- Header Institucional -->
-    <header class="institucional-header">
-        <div class="brand">
-            <div class="brand-logo">Portal Acadêmico — <span>NOTAÊ</span></div>
-            <div class="brand-subtitle">Sistema de Gestão e Notas</div>
-        </div>
-        <nav class="nav-links">
-            <a href="#">Início</a>
-            <a href="#">Polos e Unidades</a>
-            <a href="#">Matriz Curricular</a>
-            <a href="#">Suporte</a>
-        </nav>
-    </header>
+* {
+    box-sizing: border-box;
+}
 
-    <main class="main-container">
-        <div class="hero-banner">
-            <h1>Contabilização de Desempenho Acadêmico</h1>
-            <p>Selecione seu estado, polo/cidade de origem, configure suas avaliações ponderadas e calcule sua média de aprovação com total precisão.</p>
-        </div>
+body {
+    min-width: 320px;
+    margin: 0;
+    background:
+        radial-gradient(circle at 15% 0%, rgba(8, 127, 131, 0.07), transparent 30rem),
+        var(--paper);
+    color: var(--ink);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.5;
+}
 
-        <section class="card-form">
-            <form id="gradeForm">
-                <div class="form-grid">
-                    <!-- Estados Expandidos -->
-                    <div class="form-group">
-                        <label for="stateSelect">Estado (UF)</label>
-                        <select id="stateSelect" required>
-                            <option value="" disabled selected>Selecione o estado</option>
-                            <optgroup label="Norte">
-                                <option value="Amazonas">Amazonas (AM)</option>
-                                <option value="Pará">Pará (PA)</option>
-                                <option value="Tocantins">Tocantins (TO)</option>
-                                <option value="Acre">Acre (AC)</option>
-                                <option value="Rondônia">Rondônia (RO)</option>
-                            </optgroup>
-                            <optgroup label="Nordeste">
-                                <option value="Sergipe">Sergipe (SE)</option>
-                                <option value="Bahia">Bahia (BA)</option>
-                                <option value="Pernambuco">Pernambuco (PE)</option>
-                                <option value="Alagoas">Alagoas (AL)</option>
-                                <option value="Paraíba">Paraíba (PB)</option>
-                                <option value="Ceará">Ceará (CE)</option>
-                                <option value="Rio Grande do Norte">Rio Grande do Norte (RN)</option>
-                                <option value="Maranhão">Maranhão (MA)</option>
-                                <option value="Piauí">Piauí (PI)</option>
-                            </optgroup>
-                            <optgroup label="Sudeste">
-                                <option value="São Paulo">São Paulo (SP)</option>
-                                <option value="Rio de Janeiro">Rio de Janeiro (RJ)</option>
-                                <option value="Minas Gerais">Minas Gerais (MG)</option>
-                                <option value="Espírito Santo">Espírito Santo (ES)</option>
-                            </optgroup>
-                            <optgroup label="Sul">
-                                <option value="Paraná">Paraná (PR)</option>
-                                <option value="Santa Catarina">Santa Catarina (SC)</option>
-                                <option value="Rio Grande do Sul">Rio Grande do Sul (RS)</option>
-                            </optgroup>
-                        </select>
-                    </div>
+[hidden] {
+    display: none !important;
+}
 
-                    <!-- Cidades / Polos Dinâmicos -->
-                    <div class="form-group">
-                        <label for="citySelect">Polo / Cidade</label>
-                        <select id="citySelect" required>
-                            <option value="" disabled selected>Selecione o estado primeiro</option>
-                        </select>
-                    </div>
+button,
+input {
+    font: inherit;
+}
 
-                    <div class="form-group full">
-                        <label for="subject">Componente Curricular / Matéria</label>
-                        <input type="text" id="subject" placeholder="Ex: Metodologia Científica ou Banco de Dados" required>
-                    </div>
+button {
+    cursor: pointer;
+}
 
-                    <!-- Bloco de Notas e Pesos Dinâmicos -->
-                    <div class="grades-box">
-                        <div class="grades-header-flex">
-                            <h3>Avaliações e Pesos Ponderados</h3>
-                            <button type="button" class="btn-add-grade" id="addGradeRow">+ Adicionar Nova Nota</button>
-                        </div>
-                        <div id="gradesContainer">
-                            <!-- Injetado dinamicamente -->
-                        </div>
-                    </div>
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    min-height: 76px;
+    padding: 0 max(5vw, calc((100vw - 1120px) / 2));
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid rgba(220, 229, 233, 0.9);
+}
 
-                    <button type="submit" class="btn-submit">Processar e Salvar Média</button>
-                </div>
-            </form>
-        </section>
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--ink);
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    text-decoration: none;
+}
 
-        <!-- Histórico Salvo -->
-        <section class="history-section">
-            <h2>Histórico Acadêmico Registrado</h2>
-            <div class="history-list" id="historyList">
-                <!-- Injetado dinamicamente via JS -->
-            </div>
-        </section>
-    </main>
+.brand-mark {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--teal);
+    color: white;
+    font-size: 1.2rem;
+    letter-spacing: -0.08em;
+}
 
-    <script>
-        const citiesByState = {
-            "Amazonas": ["Manaus", "Parintins", "Itacoatiara", "Coari"],
-            "Pará": ["Belém", "Ananindeua", "Santarém", "Marabá"],
-            "Tocantins": ["Palmas", "Araguaína", "Gurupi"],
-            "Acre": ["Rio Branco", "Cruzeiro do Sul"],
-            "Rondônia": ["Porto Velho", "Ji-Paraná"],
-            "Sergipe": ["Aracaju", "Nossa Senhora do Socorro", "Lagarto", "Itabaiana", "Estância"],
-            "Bahia": ["Salvador", "Feira de Santana", "Vitória da Conquista", "Camaçari", "Itabuna"],
-            "Pernambuco": ["Recife", "Olinda", "Caruaru", "Petrolina", "Jaboatão dos Guararapes"],
-            "Alagoas": ["Maceió", "Arapiraca", "Palmeira dos Índios"],
-            "Paraíba": ["João Pessoa", "Campina Grande", "Patos"],
-            "Ceará": ["Fortaleza", "Caucaia", "Juazeiro do Norte", "Sobral"],
-            "Rio Grande do Norte": ["Natal", "Mossoró", "Parnamirim"],
-            "Maranhão": ["São Luís", "Imperatriz", "Caxias"],
-            "Piauí": ["Teresina", "Parnaíba", "Picos"],
-            "São Paulo": ["São Paulo", "Campinas", "Santos", "Ribeirão Preto", "São José dos Campos"],
-            "Rio de Janeiro": ["Rio de Janeiro", "Niterói", "Petrópolis", "Duque de Caxias", "Campos dos Goytacazes"],
-            "Minas Gerais": ["Belo Horizonte", "Uberlândia", "Ouro Preto", "Juiz de Fora", "Contagem"],
-            "Espírito Santo": ["Vitória", "Vila Velha", "Serra", "Cariacica"],
-            "Paraná": ["Curitiba", "Londrina", "Maringá", "Cascavel", "Foz do Iguaçu"],
-            "Santa Catarina": ["Florianópolis", "Joinville", "Blumenau", "São José", "Criciúma"],
-            "Rio Grande do Sul": ["Porto Alegre", "Caxias do Sul", "Pelotas", "Canoas", "Santa Maria"]
-        };
+.header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
 
-        const stateSelect = document.getElementById('stateSelect');
-        const citySelect = document.getElementById('citySelect');
-        const gradesContainer = document.getElementById('gradesContainer');
-        const addGradeRowBtn = document.getElementById('addGradeRow');
-        const gradeForm = document.getElementById('gradeForm');
-        const historyList = document.getElementById('historyList');
+.connection-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.35rem 0.7rem;
+    background: white;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 650;
+}
 
-        stateSelect.addEventListener('change', (e) => {
-            const selectedState = e.target.value;
-            const cities = citiesByState[selectedState] || [];
-            
-            citySelect.innerHTML = '<option value="" disabled selected>Selecione o polo / cidade</option>';
-            cities.forEach(city => {
-                const opt = document.createElement('option');
-                opt.value = city;
-                opt.textContent = city;
-                citySelect.appendChild(opt);
-            });
-        });
+.connection-status::before {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #a7b2ba;
+    content: "";
+}
 
-        function addGradeRow(note = '', weight = '') {
-            const row = document.createElement('div');
-            row.className = 'grade-row';
-            row.innerHTML = `
-                <input type="number" step="0.1" min="0" max="10" placeholder="Nota (0.0 - 10.0)" class="input-note" value="${note}" required>
-                <input type="number" step="0.1" min="0.1" placeholder="Peso" class="input-weight" value="${weight || '1'}" required>
-                <button type="button" class="btn-remove">✕</button>
-            `;
-            
-            row.querySelector('.btn-remove').addEventListener('click', () => {
-                if (gradesContainer.children.length > 1) {
-                    row.remove();
-                } else {
-                    alert("É necessário manter pelo menos uma avaliação cadastrada.");
-                }
-            });
+.connection-status[data-state="online"]::before {
+    background: #2d9b69;
+}
 
-            gradesContainer.appendChild(row);
-        }
+.connection-status[data-state="offline"]::before {
+    background: #c34e4e;
+}
 
-        addGradeRowBtn.addEventListener('click', () => addGradeRow());
+.connection-status.secondary {
+    background: #f9fbfc;
+}
 
-        addGradeRow('', '4');
-        addGradeRow('', '6');
+.page-shell {
+    width: min(1120px, calc(100% - 2rem));
+    margin: 0 auto;
+}
 
-        let historyData = JSON.parse(localStorage.getItem('unitGradeHistory')) || [];
+.hero {
+    max-width: 760px;
+    padding: 4.2rem 0 2.35rem;
+}
 
-        function renderHistory() {
-            historyList.innerHTML = '';
-            if (historyData.length === 0) {
-                historyList.innerHTML = '<div class="empty-msg">Nenhum registro acadêmico encontrado no momento.</div>';
-                return;
-            }
+.eyebrow {
+    margin: 0 0 0.65rem;
+    color: var(--teal);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
 
-            historyData.forEach((item, index) => {
-                let badgeClass = 'approved';
-                let statusText = 'Aprovado';
-                if (item.average < 5.0) {
-                    badgeClass = 'failed';
-                    statusText = 'Reprovado';
-                } else if (item.average < 7.0) {
-                    badgeClass = 'recovery';
-                    statusText = 'Recuperação';
-                }
+.hero h1 {
+    max-width: 700px;
+    margin: 0;
+    font-size: clamp(2.25rem, 5vw, 4.1rem);
+    line-height: 1.04;
+    letter-spacing: -0.055em;
+}
 
-                const itemEl = document.createElement('div');
-                itemEl.className = 'history-item';
-                itemEl.innerHTML = `
-                    <div class="history-info">
-                        <h4>${item.subject}</h4>
-                        <p>${item.city} — ${item.state}</p>
-                    </div>
-                    <div class="history-right">
-                        <div class="history-score-box">
-                            <strong>Média: ${item.average.toFixed(2)}</strong>
-                            <span class="badge ${badgeClass}">${statusText}</span>
-                        </div>
-                        <button class="btn-delete" onclick="deleteHistoryItem(${index})" title="Remover registro">🗑️</button>
-                    </div>
-                `;
-                historyList.appendChild(itemEl);
-            });
-        }
+.hero > p:last-child {
+    max-width: 650px;
+    margin: 1rem 0 0;
+    color: var(--muted);
+    font-size: 1.05rem;
+}
 
-        window.deleteHistoryItem = function(index) {
-            historyData.splice(index, 1);
-            localStorage.setItem('unitGradeHistory', JSON.stringify(historyData));
-            renderHistory();
-        };
+.auth-layout,
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+    align-items: start;
+    gap: 1.25rem;
+}
 
-        gradeForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+.content-card {
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
 
-            const state = stateSelect.value;
-            const city = citySelect.value;
-            const subject = document.getElementById('subject').value.trim();
+.auth-card,
+.catalog-card,
+.profile-card,
+.simulation-card {
+    padding: clamp(1.25rem, 3vw, 2rem);
+}
 
-            const noteInputs = document.querySelectorAll('.input-note');
-            const weightInputs = document.querySelectorAll('.input-weight');
+.card-heading h2,
+.catalog-card h2,
+.profile-heading h2,
+.simulation-heading h2 {
+    margin: 0;
+    font-size: 1.45rem;
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+}
 
-            let totalWeightedSum = 0;
-            let totalWeights = 0;
+.card-heading > p:last-child,
+.muted,
+.section-hint,
+.small-note {
+    color: var(--muted);
+}
 
-            for (let i = 0; i < noteInputs.length; i++) {
-                const note = parseFloat(noteInputs[i].value);
-                const weight = parseFloat(weightInputs[i].value);
+.card-heading > p:last-child {
+    margin: 0.5rem 0 0;
+}
 
-                totalWeightedSum += note * weight;
-                totalWeights += weight;
-            }
+.auth-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+    margin: 1.4rem 0 1.15rem;
+    padding: 0.3rem;
+    border-radius: 12px;
+    background: #eef3f5;
+}
 
-            const finalAverage = totalWeights > 0 ? (totalWeightedSum / totalWeights) : 0;
+.auth-tab {
+    border: 0;
+    border-radius: 9px;
+    padding: 0.65rem 0.8rem;
+    background: transparent;
+    color: var(--muted);
+    font-weight: 700;
+}
 
-            const record = {
-                state,
-                city,
-                subject,
-                average: finalAverage
-            };
+.auth-tab.is-active {
+    background: white;
+    color: var(--teal-dark);
+    box-shadow: 0 2px 8px rgba(22, 48, 68, 0.08);
+}
 
-            historyData.unshift(record);
-            localStorage.setItem('unitGradeHistory', JSON.stringify(historyData));
-            renderHistory();
+.form-stack {
+    display: grid;
+    gap: 1rem;
+}
 
-            gradeForm.reset();
-            citySelect.innerHTML = '<option value="" disabled selected>Selecione o estado primeiro</option>';
-            gradesContainer.innerHTML = '';
-            addGradeRow('', '4');
-            addGradeRow('', '6');
-        });
+.field {
+    display: grid;
+    gap: 0.42rem;
+    min-width: 0;
+}
 
-        renderHistory();
-    </script>
-</body>
-</html>
+.field > span {
+    color: var(--ink);
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.field input {
+    width: 100%;
+    min-height: 46px;
+    border: 1px solid #cbd8de;
+    border-radius: 10px;
+    padding: 0.68rem 0.8rem;
+    background: #fff;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.field input:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(8, 127, 131, 0.13);
+}
+
+.field input::placeholder {
+    color: #9aa9b3;
+}
+
+.field small {
+    color: var(--muted);
+    font-size: 0.76rem;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 0.65rem 1rem;
+    font-weight: 750;
+    text-decoration: none;
+    transition: background 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+
+.button:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.button:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.button-primary {
+    background: var(--teal);
+    color: #fff;
+}
+
+.button-primary:hover:not(:disabled) {
+    background: var(--teal-dark);
+}
+
+.button-outline {
+    border-color: #bfd0d7;
+    background: white;
+    color: var(--ink);
+}
+
+.button-outline:hover:not(:disabled) {
+    border-color: var(--teal);
+    background: #f5fbfa;
+}
+
+.catalog-card h2 {
+    margin-bottom: 0.45rem;
+}
+
+.catalog-card > .muted {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+}
+
+.course-list {
+    display: grid;
+    gap: 0.65rem;
+}
+
+.course-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.8rem;
+    border: 1px solid #e4ecef;
+    border-radius: 12px;
+    padding: 0.8rem 0.85rem;
+    background: #fbfdfd;
+}
+
+.course-item strong {
+    display: block;
+    font-size: 0.88rem;
+    line-height: 1.35;
+}
+
+.course-item span {
+    flex: 0 0 auto;
+    color: var(--muted);
+    font-size: 0.76rem;
+}
+
+.small-note {
+    margin: 1rem 0 0;
+    font-size: 0.77rem;
+}
+
+.feedback {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.feedback:not(:empty) {
+    margin-top: 0.85rem;
+    border-radius: 10px;
+    padding: 0.7rem 0.85rem;
+    background: #f1f5f6;
+}
+
+.feedback[data-kind="error"] {
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+.feedback[data-kind="success"] {
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.profile-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin: 0.6rem 0 1.15rem;
+}
+
+.profile-heading h2 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.profile-heading .muted {
+    margin: 0.45rem 0 0;
+}
+
+#profile-feedback {
+    margin-bottom: 1rem;
+}
+
+.dashboard-grid {
+    grid-template-columns: minmax(0, 1.45fr) minmax(270px, 0.75fr);
+}
+
+fieldset {
+    min-width: 0;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 0 0 1.3rem;
+}
+
+fieldset + fieldset {
+    padding-top: 1.25rem;
+}
+
+legend {
+    margin: 0;
+    padding: 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.section-hint {
+    margin: 0.3rem 0 1rem;
+    font-size: 0.82rem;
+}
+
+.score-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+}
+
+.location-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 110px;
+    gap: 0.9rem;
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    padding-top: 0.2rem;
+}
+
+.simulation-card {
+    margin-top: 1.25rem;
+}
+
+.simulation-heading {
+    margin-bottom: 0.9rem;
+}
+
+.simulation-heading .muted {
+    margin: 0.45rem 0 0;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin-top: 1rem;
+}
+
+.result-card {
+    display: grid;
+    align-content: start;
+    gap: 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1rem;
+    background: #fbfdfd;
+}
+
+.result-card h3 {
+    min-height: 2.5em;
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.25;
+}
+
+.result-score {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+}
+
+.result-score strong {
+    font-size: 1.8rem;
+    letter-spacing: -0.06em;
+}
+
+.result-score span,
+.result-detail {
+    color: var(--muted);
+    font-size: 0.78rem;
+}
+
+.result-detail {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.result-badge {
+    justify-self: start;
+    border-radius: 999px;
+    padding: 0.32rem 0.6rem;
+    background: #f2eeee;
+    color: #744747;
+    font-size: 0.73rem;
+    font-weight: 750;
+}
+
+.result-badge.is-reached {
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.site-footer {
+    width: min(1120px, calc(100% - 2rem));
+    margin: 2.5rem auto 0;
+    border-top: 1px solid var(--line);
+    padding: 1.2rem 0 2rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+@media (max-width: 800px) {
+    .auth-layout,
+    .dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .results-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .catalog-card {
+        order: 2;
+    }
+}
+
+@media (max-width: 560px) {
+    .site-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 0.85rem 1rem;
+    }
+
+    .header-actions {
+        justify-content: flex-start;
+    }
+
+    .connection-status {
+        font-size: 0.68rem;
+    }
+
+    .hero {
+        padding: 2.6rem 0 1.6rem;
+    }
+
+    .hero h1 {
+        font-size: 2.35rem;
+    }
+
+    .score-grid,
+    .results-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .form-actions {
+        display: grid;
+    }
+
+    .form-actions .button {
+        width: 100%;
+    }
+
+    .result-card h3 {
+        min-height: 0;
+    }
+}
